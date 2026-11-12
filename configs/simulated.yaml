@@ -1,0 +1,5 @@
+# Demo/CI only: three simulated models served by `python -m routewise.simulator`.
+backends:
+  - {name: small-sim,  base_url: "http://127.0.0.1:8900/v1", model: sim-small,  price_in_per_m: 0.05, price_out_per_m: 0.10}
+  - {name: medium-sim, base_url: "http://127.0.0.1:8900/v1", model: sim-medium, price_in_per_m: 0.30, price_out_per_m: 0.60}
+  - {name: large-sim,  base_url: "http://127.0.0.1:8900/v1", model: sim-large,  price_in_per_m: 2.50, price_out_per_m: 10.00}

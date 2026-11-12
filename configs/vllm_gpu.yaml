@@ -1,0 +1,8 @@
+# GPU run with vLLM (e.g. one L4/A10G on a cloud VM). Compare full precision vs AWQ 4-bit quantization:
+#   vllm serve Qwen/Qwen2.5-7B-Instruct --port 8001
+#   vllm serve Qwen/Qwen2.5-7B-Instruct-AWQ --quantization awq --port 8002
+#   vllm serve Qwen/Qwen2.5-1.5B-Instruct --port 8003
+backends:
+  - {name: qwen1.5b-fp16, base_url: "http://localhost:8003/v1", model: Qwen/Qwen2.5-1.5B-Instruct, gpu_hourly_usd: 0.80}
+  - {name: qwen7b-awq,    base_url: "http://localhost:8002/v1", model: Qwen/Qwen2.5-7B-Instruct-AWQ, gpu_hourly_usd: 0.80}
+  - {name: qwen7b-fp16,   base_url: "http://localhost:8001/v1", model: Qwen/Qwen2.5-7B-Instruct, gpu_hourly_usd: 0.80}

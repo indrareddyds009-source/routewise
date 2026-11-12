@@ -1,0 +1,8 @@
+# Real run on a laptop: two open-weight models via Ollama (free, CPU/Apple-silicon OK) + one API model.
+#   ollama pull qwen2.5:0.5b && ollama pull llama3.2:3b && ollama serve
+# gpu_hourly_usd = what equivalent cloud hardware would cost, so self-hosted and API costs are comparable.
+backends:
+  - {name: qwen2.5-0.5b, base_url: "http://localhost:11434/v1", model: "qwen2.5:0.5b", gpu_hourly_usd: 0.40}
+  - {name: llama3.2-3b,  base_url: "http://localhost:11434/v1", model: "llama3.2:3b",  gpu_hourly_usd: 0.40}
+  - {name: gpt-4o-mini,  base_url: "https://api.openai.com/v1", model: gpt-4o-mini, api_key_env: OPENAI_API_KEY,
+     price_in_per_m: 0.15, price_out_per_m: 0.60}

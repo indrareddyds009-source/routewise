@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip}
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: pytest -q
+      - name: End-to-end smoke run against the simulator
+        run: |
+          python -m routewise.simulator --port 8900 &
+          sleep 3
+          python -m routewise.bench --config configs/simulated.yaml --n 200 --concurrency 16 --out results/ci.jsonl
+          python -m routewise.report results/ci.jsonl --out-dir results
+          python -m routewise.router train results/ci.jsonl --out results/router.joblib
+      - uses: actions/upload-artifact@v4
+        with: {name: ci-report, path: results/}
